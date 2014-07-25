@@ -7,4 +7,13 @@
 		</jsp-property-group>
 	</jsp-config>
 	
+	<!-- 路由控制器 -->
+	<servlet>
+		<servlet-name>routeController</servlet-name>
+		<servlet-class>common.route.RouteController</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>routeController</servlet-name>
+		<url-pattern>/service/*</url-pattern>
+	</servlet-mapping>
 </web-app>

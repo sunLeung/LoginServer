@@ -2,6 +2,9 @@ package bean;
 
 import java.sql.Timestamp;
 
+import utils.Def;
+import utils.StringUtils;
+
 public class Player extends Pojo{
 	private int loginid;
 	private String name;
@@ -53,8 +56,11 @@ public class Player extends Pojo{
 	public String getPassword() {
 		return password;
 	}
+	public String getRealPassword() {
+		return StringUtils.decrypt(this.password, Def.LOGIN_PWD_KEY);
+	}
 	public void setPassword(String password) {
-		this.password = password;
+		this.password = StringUtils.encrypt(password, Def.LOGIN_PWD_KEY);
 	}
 	public Timestamp getCreateTime() {
 		return createTime;

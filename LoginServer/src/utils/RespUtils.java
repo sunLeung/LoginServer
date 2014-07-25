@@ -46,6 +46,17 @@ public class RespUtils {
 		}
 	}
 	
+	public static void commonResp(HttpServletResponse resp,int code,Object obj){
+		String result="{\"code\":%s,\"result\":%s}";
+		try {
+			result=String.format(result, code,JsonUtils.encode2Str(obj));
+			resp.setHeader("content-type", DEFAULT_CONTENT_TYPE);
+			resp.getWriter().write(result);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public static void commonResp(HttpServletResponse resp,int code){
 		String result="{\"code\":%s}";
 		try {
