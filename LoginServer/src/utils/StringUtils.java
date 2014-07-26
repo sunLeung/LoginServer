@@ -26,6 +26,13 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils{
 		}
 		return null;
 	}
+	
+	public static void main(String[] args) {
+		String a=encrypt("123456", "KUkf16w_kafadey");
+		System.out.println(a);
+		String b=decrypt(a, "KUkf16w_kafadey");
+		System.out.println(b);
+	}
 
 	/**
 	 * 数据加密

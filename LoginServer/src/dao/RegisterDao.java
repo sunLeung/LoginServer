@@ -25,7 +25,7 @@ public class RegisterDao {
 	
 	public static int update(Player bean){
 		try {
-			return dbUtils.update(Player.class, "where loginid=?", bean.getLoginid());
+			return dbUtils.update(Player.class, "where loginid=?", bean.getId());
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			e.printStackTrace();

@@ -7,6 +7,10 @@
 		</jsp-property-group>
 	</jsp-config>
 	
+	<listener>
+		<listener-class>common.listener.InitListener</listener-class>
+	</listener>
+	
 	<!-- 路由控制器 -->
 	<servlet>
 		<servlet-name>routeController</servlet-name>

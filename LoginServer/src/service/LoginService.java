@@ -27,7 +27,6 @@ public class LoginService {
 		Timestamp createTime=new Timestamp(System.currentTimeMillis());
 		String model=req.getParameter("model");
 		String mark=req.getParameter("mark");
-		Timestamp lastLoginTime=createTime;
 		
 		if(StringUtils.isBlank(name)){
 			RespUtils.commonResp(resp, RespUtils.CODE.FAIL, "player name is null.");
@@ -35,6 +34,10 @@ public class LoginService {
 		}
 		if(StringUtils.isBlank(email)&&StringUtils.isBlank(phone)){
 			RespUtils.commonResp(resp, RespUtils.CODE.FAIL, "email or phone do not null at the same time.");
+			return;
+		}
+		if(StringUtils.isBlank(password)){
+			RespUtils.commonResp(resp, RespUtils.CODE.FAIL, "password is null.");
 			return;
 		}
 		if(password.length()<6||password.length()>16){
@@ -61,11 +64,10 @@ public class LoginService {
 		p.setEmail(email);
 		p.setPhone(phone);
 		p.setUnionid(unionid);
-		p.setPassword(password);
+		p.putPassword(password);
 		p.setCreateTime(createTime);
 		p.setModel(model);
 		p.setMark(mark);
-		p.setLastLoginTime(lastLoginTime);
 		
 		int id=RegisterDao.save(p);
 		if(id>0){
@@ -127,13 +129,13 @@ public class LoginService {
 			RespUtils.commonResp(resp, RespUtils.CODE.FAIL, "LoginName is not available");
 			return;
 		}
-		loginlog.setLoginid(p.getLoginid());
-		if(p.getRealPassword().equals(password)){
+		loginlog.setLoginid(p.getId());
+		if(p.realPassword().equals(password)){
 			loginlog.setResult(0);
 			LoginDao.save(loginlog);
 			Map<String,String> result=new HashMap<String,String>();
-			result.put("loginid", p.getLoginid()+"");
-			result.put("token", StringUtils.encrypt(p.getLoginid()+"#"+System.currentTimeMillis(), Def.LOGIN_TOKEN_KEY));
+			result.put("loginid", p.getId()+"");
+			result.put("token", StringUtils.encrypt(p.getId()+"#"+System.currentTimeMillis(), Def.LOGIN_TOKEN_KEY));
 			RespUtils.commonResp(resp, RespUtils.CODE.SUCCESS, result);
 		}else{
 			loginlog.setResult(2);
